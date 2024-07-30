@@ -45,67 +45,21 @@
             border-radius: 5px;
             cursor: pointer;
         }
-
-        #loadingMessage {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 18px;
-            color: white;
-        }
     </style>
 </head>
 <body>
     <div class="video-container">
-        <video id="video" playsinline>
+        <video id="video"playsinline>
             <!-- Video source will be set dynamically -->
         </video>
         <button id="startButton">Start</button>
-        <div id="loadingMessage">Loading...</div>
     </div>
     <script>
-        const videos = [
-            'https://drive.google.com/uc?export=download&id=1OM5aFJ_Q62_IK06SVgXtiUmAMxKCUDKx'
-            // Add more videos here if needed
-        ];
+        const videos = ['1.mp4']; // Add more or fewer videos as needed 
         let currentVideo = 0;
-        let allVideosLoaded = false;
 
         const videoElement = document.getElementById('video');
         const startButton = document.getElementById('startButton');
-        const loadingMessage = document.getElementById('loadingMessage');
-
-        function preloadVideos(videos) {
-            return new Promise((resolve, reject) => {
-                let loaded = 0;
-                const total = videos.length;
-                
-                videos.forEach(src => {
-                    const video = document.createElement('video');
-                    video.preload = 'auto';
-                    video.src = src;
-                    video.oncanplaythrough = () => {
-                        loaded++;
-                        if (loaded === total) {
-                            resolve();
-                        }
-                    };
-                    video.onerror = () => {
-                        reject(new Error(`Failed to load video: ${src}`));
-                    };
-                });
-            });
-        }
-
-        preloadVideos(videos).then(() => {
-            allVideosLoaded = true;
-            loadingMessage.style.display = 'none'; // Hide loading message
-            startButton.style.display = 'block';  // Show the start button
-        }).catch(error => {
-            console.error(error);
-            loadingMessage.textContent = 'Failed to load videos';
-        });
 
         startButton.addEventListener('click', function() {
             startButton.style.display = 'none'; // Hide the button
